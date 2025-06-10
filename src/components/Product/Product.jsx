@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom"; // Link is used to create links to other pages in the application
-import { CartContext } from "../../context/CArtContext";
+import { CartContext } from "../../context/CartContext";
 import { toast } from "react-toastify";
 export default function Product({ product }) {
   const { addToCart } = useContext(CartContext);

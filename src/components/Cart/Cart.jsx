@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CartContext } from "../../context/CArtContext";
+import { CartContext } from "../../context/CartContext";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import CheckOut from "../CheckOut/CheckOut";

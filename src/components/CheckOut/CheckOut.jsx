@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext ,useEffect} from "react";
-import { CartContext } from "../../context/CArtContext";
+import { CartContext } from "../../context/CartContext";
 export default function CheckOut() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);

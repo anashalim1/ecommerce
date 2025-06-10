@@ -9,7 +9,7 @@ import {
 } from "flowbite-react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { CartContext } from "../../context/CArtContext";
+import { CartContext } from "../../context/CartContext";
 
 export default function CustomNavbar() {
   const { authToken, setAuthToken } = useContext(AuthContext);

@@ -4,7 +4,7 @@ import Loader from "../Loader/Loader";
 import { useParams } from "react-router-dom"; // <-- import useParams
 import RelatedProducts from "../RelatedProducts/RelatedProducts";
 import Slider from "react-slick";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../context/CartContext.jsx";
 import { toast } from "react-toastify";
 
 export default function ProductDetails() {

@@ -5,7 +5,7 @@ import Product from "../Product/Product";
 import useFetch from "../../hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
 export default function RecentProducts() {
-
+ 
   //METHOD 1 TO FETCH DATA USING useQuery
 const {data, isError, isLoading} = useQuery({
   queryKey:'recentProducts', // unique key for the query

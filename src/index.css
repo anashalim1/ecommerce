@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+
+
+a.active {
+  @apply text-teal-600 hover:text-teal-700;
+}
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: light;
+  }
+}

@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { use, useEffect, useState } from "react";
-import "../RecentProducts/recentProducts.module.css";
 import Loader from "../Loader/Loader";
 import Product from "../Product/Product";
 import useFetch from "../../hooks/useFetch";

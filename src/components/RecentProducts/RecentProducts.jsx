@@ -5,19 +5,29 @@ import Product from "../Product/Product";
 import useFetch from "../../hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
 export default function RecentProducts() {
- 
+  const [visableCount, setVisableCount] = useState(10);
+  const [recentProducts, setRecentProducts] = useState([]);
   //METHOD 1 TO FETCH DATA USING useQuery
-const {data, isError, isLoading} = useQuery({
-  queryKey:'recentProducts', // unique key for the query
-  queryFn:getRecentProducts // function to fetch data
-})
-console.log("recent products", data);
+  const { data, isError, isLoading } = useQuery({
+    queryKey: "recentProducts", // unique key for the query
+    queryFn: getRecentProducts, // function to fetch data
+  });
+  console.log("recent products", data);
 
-async function getRecentProducts() {
-  return  axios.get('https://ecommerce.routemisr.com/api/v1/products')
-  
-}
+  async function getRecentProducts() {
+    return axios.get("https://ecommerce.routemisr.com/api/v1/products");
+  }
 
+  useEffect(() => {
+    if (data) {
+      setRecentProducts(data.data.data.slice(0, visableCount)); // set the initial visible products
+      // set the fetched data to the state
+    }
+  }, [data, visableCount]);
+
+  function loadMoreProducts() {
+    setVisableCount((prev) => prev + 10); // increase the visible count by 20
+  }
   //METHOD 2 to fetch data using custom hook
   // const { data, error, loading } = useFetch(
   //     "https://ecommerce.routemisr.com/api/v1/products"
@@ -63,12 +73,22 @@ async function getRecentProducts() {
             </div>
           ) : (
             <div className="row flex flex-wrap mx-6 ">
-              {data.data.data.map(
+              {recentProducts.map(
                 (
                   product // loop using map to show each product using the product component
                 ) => (
                   <Product key={product._id} product={product} />
                 )
+              )}
+              {recentProducts.length && (
+                <div className="text-center mt-6">
+                  <button
+                    onClick={loadMoreProducts}
+                    className="w-full  bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                  >
+                    See More products
+                  </button>
+                </div>
               )}
             </div>
           )}

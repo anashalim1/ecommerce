@@ -23,10 +23,15 @@ export default function CustomNavbar() {
 
   return (
     <Navbar className="sticky top-0  w-full z-50  py-5">
-      <NavbarBrand href="https://flowbite-react.com">
-        <span className="self-center whitespace-nowrap text-xl font-semibold text-white">
-          Fresh cart <i class="fa-solid fa-cart-shopping"></i>
+      <NavbarBrand  as={NavLink} to="/">
+        <div className="flex items-center gap-4">
+          <span className="self-center  whitespace-nowrap text-xl  text-white font-bold">
+          Fresh cart 
         </span>
+        <span>
+          <i className="fa-solid fa-cart-shopping self-center  whitespace-nowrap text-xl  text-white"></i>
+        </span>
+        </div>
       </NavbarBrand>
       <NavbarToggle />
       <NavbarCollapse>
@@ -44,8 +49,8 @@ export default function CustomNavbar() {
             <NavbarLink as={NavLink} to="/categories" className="!text-white">
               Categories
             </NavbarLink>
-            <NavbarLink as={NavLink} to="/profile" className="!text-white">
-              Profile
+            <NavbarLink as={NavLink} to="/allorders" className="!text-white">
+              My orders
             </NavbarLink>
             <NavbarLink as={NavLink} to="/cart" className="!text-white">
               <i className="fa-solid fa-cart-shopping text-xl pr-1.5"></i>{" "}

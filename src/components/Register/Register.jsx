@@ -93,99 +93,147 @@ export default function Register() {
 
   return (
     <section className="p-10">
-      <div className="container mx-auto px-3">
-        <div className="max-w-xl mx-auto">
-          <h2 className="text-4xl font-bold mb-6">Register form</h2>
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-start">
+          <div className="w-full md:w-1/3" >
+            <h2 className="text-4xl font-bold mb-6">Register form</h2>
           {error && ( // if there is an error FROM the API , show an alert with the error message , for example, if the email is already registered
             <Alert color="failure">
               <span className="">{error}</span>
             </Alert>
           )}
-          <form onSubmit={formik.handleSubmit} className="">
-            {/* on submit the function handlesubmit اللي جوا الفورمك هتشتغل */}
-            <FloatingLabel
-              className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-              variant="filled"
-              label="Name"
-              type="text"
-              name="name"
-              value={formik.values.name} // value is the current value of the input field
-              onChange={formik.handleChange} //
-              onBlur={formik.handleBlur} // onBlur is called when the input field loses focus , used to trigger validation as soon as the user loses focus from the input field not wait untill clicking submit
-            />
-            {formik.errors.name &&
-              formik.touched.name && ( // the validition error maeeage , happens if these is 1-error the the input and 2- the input lost user focus(clicked some where else )
-                <span className="text-red-500 inline-block mb-4">
-                  {formik.errors.name}{" "}
-                  {/* the error message from the validation schema related to the name*/}
+          </div>
+          <form onSubmit={formik.handleSubmit} className="w-full md:w-2/3 bg-gray-800 p-6 rounded-lg shadow-md">
+            {/* Name */}
+            <div className="relative mb-6 ">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder=" "
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              />
+              <label
+                htmlFor="name"
+                className="absolute text-sm text-gray-500 bg-gray-200 px-2 top-2 left-1 z-10 transition-all duration-200 transform scale-75 -translate-y-4 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75"
+              >
+                Name
+              </label>
+              {formik.errors.name && formik.touched.name && (
+                <span className="text-red-500 inline-block mt-1">
+                  {formik.errors.name}
                 </span>
               )}
-            <FloatingLabel
-              className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-              variant="filled"
-              label="Email"
-              type="email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.email && formik.touched.email && (
-              <span className="text-red-500 inline-block mb-4">
-                {formik.errors.email}
-              </span>
-            )}
-            <FloatingLabel
-              className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-              variant="filled"
-              label="Password"
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.password && formik.touched.password && (
-              <span className="text-red-500 inline-block mb-4">
-                {formik.errors.password}
-              </span>
-            )}
-            <FloatingLabel
-              className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-              variant="filled"
-              label="rePassword"
-              type="password"
-              name="rePassword"
-              value={formik.values.rePassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.rePassword && formik.touched.rePassword && (
-              <span className="text-red-500 inline-block mb-4">
-                {formik.errors.rePassword}
-              </span>
-            )}
-            <FloatingLabel
-              className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-              variant="filled"
-              label="Phone"
-              type="tel"
-              name="phone"
-              value={formik.values.phone}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.phone && formik.touched.phone && (
-              <span className="text-red-500 inline-block mb-4">
-                {formik.errors.phone}
-              </span>
-            )}
-            <Button // on defult is disabled , it will be enabled when the form is valid and the initial values are changed(formik.dirty)
+            </div>
+
+            {/* Email */}
+            <div className="relative mb-6">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder=" "
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              />
+              <label
+                htmlFor="email"
+                className="absolute text-sm text-gray-500 bg-gray-200 px-2 top-2 left-1 z-10 transition-all duration-200 transform scale-75 -translate-y-4 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75"
+              >
+                Email
+              </label>
+              {formik.errors.email && formik.touched.email && (
+                <span className="text-red-500 inline-block mt-1">
+                  {formik.errors.email}
+                </span>
+              )}
+            </div>
+
+            {/* Password */}
+            <div className="relative mb-6">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder=" "
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              />
+              <label
+                htmlFor="password"
+                className="absolute text-sm text-gray-500 bg-gray-200 px-2 top-2 left-1 z-10 transition-all duration-200 transform scale-75 -translate-y-4 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75"
+              >
+                Password
+              </label>
+              {formik.errors.password && formik.touched.password && (
+                <span className="text-red-500 inline-block mt-1">
+                  {formik.errors.password}
+                </span>
+              )}
+            </div>
+
+            {/* rePassword */}
+            <div className="relative mb-6">
+              <input
+                type="password"
+                name="rePassword"
+                id="rePassword"
+                value={formik.values.rePassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder=" "
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              />
+              <label
+                htmlFor="rePassword"
+                className="absolute text-sm text-gray-500 bg-gray-200 px-2 top-2 left-1 z-10 transition-all duration-200 transform scale-75 -translate-y-4 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75"
+              >
+                Confirm Password
+              </label>
+              {formik.errors.rePassword && formik.touched.rePassword && (
+                <span className="text-red-500 inline-block mt-1">
+                  {formik.errors.rePassword}
+                </span>
+              )}
+            </div>
+
+            {/* Phone */}
+            <div className="relative mb-6">
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder=" "
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              />
+              <label
+                htmlFor="phone"
+                className="absolute text-sm text-gray-500 bg-gray-200 px-2 top-2 left-1 z-10 transition-all duration-200 transform scale-75 -translate-y-4 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75"
+              >
+                Phone
+              </label>
+              {formik.errors.phone && formik.touched.phone && (
+                <span className="text-red-500 inline-block mt-1">
+                  {formik.errors.phone}
+                </span>
+              )}
+            </div>
+
+            <Button
               disabled={!(formik.isValid && formik.dirty) || isLoading}
               type="submit"
             >
-              {isLoading ? "Loading..." : "Register"}{" "}
-              {/* if isLoading is true, show Loading... else show Register */}
+              {isLoading ? "Loading..." : "Register"}
             </Button>
           </form>
         </div>

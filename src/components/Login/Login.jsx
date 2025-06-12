@@ -13,7 +13,7 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { setAuthToken } = useContext(AuthContext);
-  
+
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Invalid email address")
@@ -64,34 +64,52 @@ export default function Login() {
               <span className="">{error}</span>
             </Alert>
           )}
-          <form onSubmit={formik.handleSubmit} className="">
-            <FloatingLabel
-              className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-              variant="filled"
-              label="Email"
-              type="email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
+          <form onSubmit={formik.handleSubmit} className="bg-gray-800 py-20 px-6 rounded-lg shadow-md">
+            <div className="relative mb-6">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder=" "
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              />
+              <label
+                htmlFor="email"
+                className="absolute text-m rounded-2xl text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-gray-200 px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                Email
+              </label>
+            </div>
+
             {formik.errors.email && formik.touched.email && (
-              <span className="text-red-500 inline-block mb-4">
+              <span className="text-red-500 inline-block mb-4 font-bold">
                 {formik.errors.email}
               </span>
             )}
-            <FloatingLabel
-              className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-              variant="filled"
-              label="Password"
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
+            <div className="relative mb-6">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder=" "
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              />
+              <label
+                htmlFor="password"
+                className="absolute text-m rounded-2xl text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-gray-200 px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                Password
+              </label>
+            </div>
+
             {formik.errors.password && formik.touched.password && (
-              <span className="text-red-500 inline-block mb-4">
+              <span className="text-red-500 inline-block mb-4 font-bold">
                 {formik.errors.password}
               </span>
             )}

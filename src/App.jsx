@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         path: "/products",
         element: (
           <ProtectedRoutes>
-            // Protected route for products
+            
             {/* This route is protected, meaning it requires authentication to access. */}
             {/* If the user is not authenticated, they will be redirected to the login page. */}
             {/* The Products component will be rendered if the user is authenticated. */}

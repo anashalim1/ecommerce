@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
@@ -7,7 +8,6 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
-import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext.jsx";
 
@@ -20,17 +20,30 @@ export default function CustomNavbar() {
     setAuthToken(null);
     navigate("/login");
   }
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <Navbar className="sticky top-0  w-full z-50  py-5">
-      <NavbarBrand  as={NavLink} to="/">
+    <Navbar
+      className={`sticky top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-5"
+      }`}
+    >
+      <NavbarBrand as={NavLink} to="/">
         <div className="flex items-center gap-4">
           <span className="self-center  whitespace-nowrap text-xl  text-white font-bold">
-          Fresh cart 
-        </span>
-        <span>
-          <i className="fa-solid fa-cart-shopping self-center  whitespace-nowrap text-xl  text-white"></i>
-        </span>
+            Fresh cart
+          </span>
+          <span>
+            <i className="fa-solid fa-cart-shopping self-center  whitespace-nowrap text-xl  text-white"></i>
+          </span>
         </div>
       </NavbarBrand>
       <NavbarToggle />
@@ -40,9 +53,7 @@ export default function CustomNavbar() {
             <NavbarLink as={NavLink} to="/" end className="!text-white">
               Home
             </NavbarLink>
-            <NavbarLink as={NavLink} to="/products" className="!text-white">
-              Products
-            </NavbarLink>
+
             <NavbarLink as={NavLink} to="/brands" className="!text-white">
               Brands
             </NavbarLink>

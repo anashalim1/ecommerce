@@ -17,6 +17,7 @@ import MyOrders from "./components/MyOrders/MyOrders";
 import CheckOut from "./components/CheckOut/CheckOut";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
+import FilterProducts from "./components/FilterProducts/FilterProducts";
 import { ToastContainer } from "react-toastify";
 import "flowbite";
 
@@ -77,6 +78,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoutes>
             <Brands />
+          </ProtectedRoutes>
+        ),
+      },
+        {
+        path: "/filterproducts/:id/:name",
+        element: (
+          <ProtectedRoutes>
+            <FilterProducts />
           </ProtectedRoutes>
         ),
       },

@@ -52,7 +52,7 @@ export default function Product({ product }) {
               </div>
             </div>
           </div>
-        </Link>{" "}
+        </Link>
         {/* we put the button after the link so if we cllicked the button , we dont get routed to the product details page*/}
         <button
           onClick={() => addingToCart(product._id)}

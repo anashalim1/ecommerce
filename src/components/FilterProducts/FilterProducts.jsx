@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { use, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { useQuery } from "@tanstack/react-query";
 import Product from "../Product/Product";
@@ -40,13 +41,14 @@ export default function FilterProducts() {
               {isError}
             </div>
           ) : ( <div className="row flex flex-wrap mx-6 ">
-            {brandFilter? brandFilter.map(
+            {brandFilter && brandFilter.length > 0 ? brandFilter.map(
               (product) => (
                 <Product key={product.id} product={product} />
               )
             ) : (
-              <div className="text-center w-full">
-                <p className="text-gray-500">No products found</p>
+              <div className="text-center w-full flex flex-col items-center justify-center ">
+                <p className="text-gray-500 font-bold">Sorry we don't have any products from this brand yet ...</p>
+                <Link  to="/" className="text-gray-900 font-bold hover:underline">Browse other products </Link>
               </div>
             )}
 
@@ -59,3 +61,4 @@ export default function FilterProducts() {
     </>
   );
 }
+                

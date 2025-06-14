@@ -10,7 +10,7 @@ export default function Brand({ brand }) {
         <div className="card">
           <img
             src={brand.image}
-            alt="brand.name"
+            alt={brand.name}
             className="card-img-top rounded-md "
           />
         </div>

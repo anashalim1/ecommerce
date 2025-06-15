@@ -5,7 +5,7 @@ export default function Categorie({ categorie }) {
   return (
     <>
       <section>
-        <Link to={`/categories/${categorie._id}/${categorie.name}`}>
+        <Link to={`/categories/${categorie._id}`}>
           <div className="card">
             <img
               src={categorie.image}

@@ -2,7 +2,7 @@ import useFetch from "../../hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-import Categorie from "../Categorie/categorie";
+import Categorie from "../Categorie/Categorie";
 export default function Categories() {
   async function getCategories() {
     return axios.get("https://ecommerce.routemisr.com/api/v1/categories");

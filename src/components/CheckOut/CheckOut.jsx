@@ -4,9 +4,11 @@ import { Button, Alert } from "flowbite-react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState, useContext ,useEffect} from "react";
+import { useState, useContext, useEffect } from "react";
 import { CartContext } from "../../context/CartContext";
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -16,9 +18,9 @@ export default function CheckOut() {
   const [isOnline, setIsOnline] = useState(false);
   const initialValues = {
     // Initial values for the form fields , used by Formik
-    details: "Address details",
-    city: "Cairo",
-    phone: "544",
+    address: "anassanas",
+    city: "Menoufia",
+    phone: "01111111111",
   };
 
   async function onSubmit(values) {
@@ -45,16 +47,25 @@ export default function CheckOut() {
       });
     }
   }
-
+  const validationSchema = Yup.object({
+    address: Yup.string().required("Address is required"),
+    city: Yup.string().required("city is required"),
+    phone: Yup.string()
+      .required("Phone number is required")
+      .matches(/^\+?\d+$/, "Invalid phone number ")
+      .min(10, "Phone number must be at least 10 digits")
+      .max(15, "Phone number must be at most 15 digits"),
+  });
   const formik = useFormik({
     // useFormik is a hook provided by Formik to manage form state and validation
     initialValues,
     onSubmit,
+    validationSchema,
   });
-useEffect(()=>{
-  document.title = "Checkout";
-  window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
-},[]) 
+  useEffect(() => {
+    document.title = "Checkout";
+    window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
+  }, []);
   return (
     <>
       {numberOfCartItems ? (
@@ -65,38 +76,79 @@ useEffect(()=>{
 
               <form onSubmit={formik.handleSubmit} className="">
                 {/* on submit the function handlesubmit اللي جوا الفورمك هتشتغل */}
-                <FloatingLabel
-                  className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500 b"
-                  variant="filled"
-                  label="Address details"
-                  type="text"
-                  name="details" // name is used to identify the input field in the formik values object
-                  value={formik.values.details} // value is the current value of the input field
-                  onChange={formik.handleChange} //
-                  onBlur={formik.handleBlur} // onBlur is called when the input field loses focus , used to trigger validation as soon as the user loses focus from the input field not wait untill clicking submit
-                />
 
-                <FloatingLabel
-                  className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-                  variant="filled"
-                  label="city"
-                  type="text"
-                  name="city"
-                  value={formik.values.city}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
+                <div className="relative mb-6 ">
+                  <input
+                    type="address"
+                    name="address"
+                    id="address"
+                    value={formik.values.address} // value is the current value of the input field
+                    onChange={formik.handleChange} //
+                    onBlur={formik.handleBlur} // onBlur is called when the input field loses focus , used to trigger validation as soon as the user loses focus from the input field not wait untill clicking submit
+                    placeholder=" "
+                    className="block pb-6 pt-4 w-full text-lg font-semibold text-gray-900 bg-gray-200 rounded-lg border border-gray-300  focus:outline-none focus:ring-0 focus:border-blue-600 peer p-4"
+                  />
+                  <label
+                    htmlFor="address"
+                    className="absolute text-m rounded-2xl text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-gray-200 px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                  >
+                    Address details
+                  </label>
+                </div>
+                {formik.errors.address && formik.touched.address && (
+                  <span className="text-red-500 inline-block mb-4 font-bold">
+                    {formik.errors.address}
+                  </span>
+                )}
 
-                <FloatingLabel
-                  className="mb-4 [&>input]:text-gray-900 [&>label]:text-gray-500"
-                  variant="filled"
-                  label="Phone"
-                  type="tel"
-                  name="phone"
-                  value={formik.values.phone}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
+                <div className="relative mb-6 ">
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    value={formik.values.city} // value is the current value of the input field
+                    onChange={formik.handleChange} //
+                    onBlur={formik.handleBlur} // onBlur is called when the input field loses focus , used to trigger validation as soon as the user loses focus from the input field not wait untill clicking submit
+                    placeholder=" "
+                    className="block pb-6 pt-4 w-full text-lg font-semibold text-gray-900 bg-gray-200 rounded-lg border border-gray-300  focus:outline-none focus:ring-0 focus:border-blue-600 peer p-4"
+                  />
+                  <label
+                    htmlFor="address"
+                    className="absolute text-m rounded-2xl text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-gray-200 px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                  >
+                    City
+                  </label>
+                </div>
+                {formik.errors.city && formik.touched.city && (
+                  <span className="text-red-500 inline-block mb-4 font-bold">
+                    {formik.errors.city}
+                  </span>
+                )}
+
+                <div className="relative mb-6 ">
+                  <input
+                    type="phone"
+                    name="phone"
+                    id="phone"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    placeholder=" "
+                    className="block pb-6 pt-4 w-full text-lg font-semibold text-gray-900 bg-gray-200 rounded-lg border border-gray-300  focus:outline-none focus:ring-0 focus:border-blue-600 peer p-4"
+                  />
+                  <label
+                    htmlFor="address"
+                    className="absolute text-m rounded-2xl text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-gray-200 px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                  >
+                    Phone number
+                  </label>
+                </div>
+                {formik.errors.phone && formik.touched.phone && (
+                  <span className="text-red-500 inline-block mb-4 font-bold">
+                    {formik.errors.phone}
+                  </span>
+                )}
+
                 <div className="flex items-center mb-4">
                   <input
                     onChange={() => setIsOnline(!isOnline)} // toggle the isOnline state when the checkbox is clicked
@@ -113,6 +165,7 @@ useEffect(()=>{
                   </label>
                 </div>
                 <Button
+                  disabled={!(formik.isValid && formik.dirty) || isLoading}
                   type="submit"
                   className="w-full bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                 >

@@ -59,7 +59,7 @@ export default function MyOrders() {
                 </tr>
               </thead>
               <tbody>
-                {allOrdersData.map((order) => (
+                {allOrdersData.slice().reverse().map((order) => (
                   <tr className="odd:bg-white  even:bg-gray-100  border-b  border-gray-200">
                     <th
                       scope="row"

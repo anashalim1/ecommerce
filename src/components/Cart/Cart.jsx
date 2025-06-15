@@ -42,48 +42,34 @@ export default function Cart() {
       });
     }
   }
-useEffect(()=>{
-  document.title = "Cart";
-  window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
-},[]) 
+  useEffect(() => {
+    document.title = "Cart";
+    window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
+  }, []);
   return (
     <>
       <section>
-        <div className="p-4 flex justify-between">
-          {cartDetails && numberOfCartItems > 0 && (
-            <div>
-              <span className="bg-green-100 text-green-800  font-medium me-2 px-2.5 py-1.5 rounded-sm dark:bg-green-900 dark:text-green-300">
-                Total Price {cartDetails.totalCartPrice}EGP
-              </span>
-              <button
-                onClick={() => clearCart()}
-                type="button"
-                className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-              >
-                <i className="fa-solid fa-trash"> Drop cart</i>
-              </button>
-            </div>
-          )}
-        </div>
-
         {cartDetails && numberOfCartItems > 0 ? (
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <div className=" shadow-md p-8 bg-gray-500 rounded-lg mx-7 my-9">
+            <span className="block w-fit bg-green-700 text-white font-bold text-xl rounded-lg px-5 py-2.5 mb-5 ">
+              Total Price {cartDetails.totalCartPrice}EGP
+            </span>
+            <table className="w-full text-m text-center  text-black rounded-lg ">
+              <thead className="uppercase bg-green-100   text-black ">
                 <tr>
-                  <th scope="col" className="px-16 py-3">
+                  <th scope="col" className="p-5">
                     <span className="sr-only">Image</span>
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="p-5">
                     Product
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="p-5">
                     Qty
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="p-5">
                     Price
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="p-5">
                     Action
                   </th>
                 </tr>
@@ -92,7 +78,7 @@ useEffect(()=>{
                 {cartDetails.products.map((product) => (
                   <tr
                     key={product._id}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    className="bg-white    "
                   >
                     <td className="p-4">
                       <img
@@ -101,7 +87,7 @@ useEffect(()=>{
                         alt={product.product.title}
                       />
                     </td>
-                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    <td className="px-6 py-4 font-semibold text-gray-900 ">
                       {product.product.title}
                     </td>
                     <td className="px-6 py-4">
@@ -114,7 +100,7 @@ useEffect(()=>{
                               product.count - 1
                             )
                           }
-                          className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                          className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 "
                           type="button"
                         >
                           <span className="sr-only">Decrease quantity</span>
@@ -144,7 +130,7 @@ useEffect(()=>{
                               product.count + 1
                             )
                           }
-                          className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                          className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 ark:bg-gray-800  "
                           type="button"
                         >
                           <span className="sr-only">Increase quantity</span>
@@ -165,7 +151,7 @@ useEffect(()=>{
                         </button>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    <td className="px-6 py-4 font-semibold text-gray-900 ">
                       {product.price * product.count} EGP
                     </td>
                     <td className="px-6 py-4">
@@ -175,7 +161,7 @@ useEffect(()=>{
                         }
                         type="button"
                         href="#"
-                        className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                        className="font-medium text-red-600 hover:underline"
                       >
                         Remove
                       </button>
@@ -184,9 +170,26 @@ useEffect(()=>{
                 ))}
               </tbody>
             </table>
+
+            <div className="p-4 flex justify-between ">
+              {cartDetails && numberOfCartItems > 0 && (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => clearCart()}
+                    type="button"
+                    className="   bg-red-700 text-white hover:bg-red-800 text-xl font-bold rounded-lg px-5 py-2.5 me-2 mb-2 "
+                  >
+                    <i className="fa-solid fa-trash ">
+                      {" "}
+                      <span className="ms-3">Drop cart</span>
+                    </i>
+                  </button>
+                </div>
+              )}
+            </div>
             <Link
               to={"/checkout"}
-              className="focus:outline-none block w-full text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-5 my-2"
+              className="block w-1/3 text-center mx-auto text-2xl text-white bg-green-700 hover:bg-green-800  focus:ring-green-300 font-bold rounded-lg  p-5 my-2"
             >
               Proceed to checkout
             </Link>
@@ -195,11 +198,10 @@ useEffect(()=>{
           <div className="flex justify-center items-center min-h-[200px] font-bold">
             <span>
               There is no items in your cart, you can start shopping from
-              
             </span>
             <Link className="underline text-blue-600 pl-1.5 text-lg " to={"/"}>
-                Here
-              </Link>
+              Here
+            </Link>
           </div>
         )}
       </section>

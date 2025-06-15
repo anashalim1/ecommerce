@@ -74,7 +74,7 @@ export default function Login() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 placeholder=" "
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               />
               <label
                 htmlFor="email"
@@ -98,7 +98,7 @@ export default function Login() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 placeholder=" "
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               />
               <label
                 htmlFor="password"

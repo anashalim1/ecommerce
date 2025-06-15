@@ -33,7 +33,7 @@ export default function CustomNavbar() {
   return (
     <Navbar
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-5"
+        isScrolled ? "bg-white shadow-md py-4" : "bg-transparent py-6"
       }`}
     >
       <NavbarBrand as={NavLink} to="/">

@@ -69,20 +69,32 @@ export default function Product({ product }) {
           </div>
         </Link>
         {/* we put the button after the link so if we cllicked the button , we dont get routed to the product details page*/}
-        <button
-          onClick={() => addingToCart(product._id)}
-          type="button"
-          className="opacity-0 group-hover:opacity-100 focus:outline-none w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-        >
-          Add to Cart
-        </button>
+        <div className="flex">
           <button
-          onClick={() => addingToWishlist(product._id)}
-          type="button"
-          className="opacity-0 group-hover:opacity-100 focus:outline-none w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-        >
-          Add to Wishlist
-        </button>
+            onClick={() => addingToCart(product._id)}
+            type="button"
+            className="opacity-0 group-hover:opacity-100 focus:outline-none w-50 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+          >
+            Add to Cart
+          </button>
+          <button
+            onClick={() => addingToWishlist(product._id)}
+            type="button"
+            className="opacity-0 group-hover:opacity-100       px-5 py-2.5 me-2 mb-2"
+          >
+            <svg
+              className="w-9 h-9 text-red-700 text-2xl"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+            </svg>
+          </button>
+        </div>
       </div>
     </>
   );

@@ -19,6 +19,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import FilterProducts from "./components/FilterProducts/FilterProducts";
 import CategoriesDetails from "./components/CategoriesDetails/CategoriesDetails";
+import Wishlist from "./components/Wishlist/Wishlist";
 import { ToastContainer } from "react-toastify";
 import "flowbite";
 
@@ -70,6 +71,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoutes>
             <CategoriesDetails />
+          </ProtectedRoutes>
+        ),
+      },
+         {
+        path: "/wishlist",
+        element: (
+          <ProtectedRoutes>
+            <Wishlist />
           </ProtectedRoutes>
         ),
       },

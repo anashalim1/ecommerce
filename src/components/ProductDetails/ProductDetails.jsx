@@ -19,7 +19,7 @@ export default function ProductDetails() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  const { addToCart } = useContext(CartContext);
+  const { addToCart ,addToWishlist } = useContext(CartContext);
 
   async function addingToCart(productId) {
     const res = await addToCart(productId);
@@ -51,7 +51,20 @@ export default function ProductDetails() {
       setLoading(false);
     }
   }
-
+ async function addingToWishlist(productId) {
+    const res = await addToWishlist(productId);
+    if (res.status == "success") {
+      toast.success("Product added to wishlist successfully!", {
+        theme: "dark",
+        position: "bottom-right",
+      });
+    } else {
+      toast.error("Error adding product to wishlist!", {
+        theme: "dark",
+        position: "bottom-right",
+      });
+    }
+  }
   useEffect(() => {
     getRecentProduct();
   }, [id]); // <-- re-run if id changes
@@ -81,7 +94,7 @@ export default function ProductDetails() {
                 {recentProduct.imageCover && (
                   <div className="slider-container">
                     <Slider {...settings}>
-                      {console.log(recentProduct.images)}
+                      {/* {console.log(recentProduct.images)} */}
                       {recentProduct?.images?.map((image) => (
                         <img src={image} alt={recentProduct.title} />
                       ))}
@@ -110,6 +123,13 @@ export default function ProductDetails() {
                   className="focus:outline-none w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                 >
                   Add to Cart
+                </button>
+                  <button
+                  onClick={() => addingToWishlist(recentProduct._id)}
+                  type="button"
+                  className="focus:outline-none w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                >
+                  Add to wishlist
                 </button>
               </div>
             </div>

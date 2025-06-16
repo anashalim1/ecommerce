@@ -9,14 +9,15 @@ export const CartContext = createContext(null);
 export default function CartContextProvider({ children }) {
   const [cartDetails, setCartDetails] = useState(null);
   const API_URL = "https://ecommerce.routemisr.com/api/v1/cart";
-  const { authToken ,ownerId } = useContext(AuthContext);
+  const { authToken, ownerId } = useContext(AuthContext);
   const [numberOfCartItems, setnumberOfCartItems] = useState(0);
+  const [numberOfWishlistItems, setNumberOfWishlistItems] = useState(0)
   const [cartId, setcartId] = useState(null);
   // const [ownerId, setOwnerId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [allOrdersData, setallOrdersData] = useState([]);
-
+  const [wishlist, setWishlist] = useState([]);
   useEffect(() => {
     if (authToken !== null) {
       // to check that the user is logged in and has a token
@@ -177,6 +178,67 @@ export default function CartContextProvider({ children }) {
       setLoading(false);
     }
   }
+ async function getWishlist() {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        "https://ecommerce.routemisr.com/api/v1/wishlist",
+        { headers: { token: authToken } }
+      );
+      console.log("Wishlist fetched:", data);
+      if (data.status === "success") {
+        setWishlist(data);
+        setNumberOfWishlistItems(data.data.length);
+        console.log("number of wishlist items", data.data.length);
+        return data;
+      }
+    } catch (error) {
+      console.log("Error fetching wishlist:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  async function addToWishlist(productId) {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/wishlist",
+        { productId: productId },
+        { headers: { token: authToken } }
+      );
+      console.log("Product added to wishlist:", data);
+      if (data.status === "success") {
+         setWishlist(getWishlist());
+        return data;
+      }
+    } catch (error) {
+      console.log("Error adding to wishlist:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+ 
+
+  async function removeItemWishlist(productId) {
+    try {
+      const { data } = await axios.delete(
+        `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
+        {
+          headers: { token: authToken },
+        }
+      );
+      console.log("Product removed from wishlist:", data);
+      if (data.status === "success") {
+        setWishlist(getWishlist());
+        return data;
+      }
+    } catch (error) {
+      console.log("Error removing item from wishlist:", error);
+      return error;
+    }
+  }
   return (
     <>
       <CartContext.Provider
@@ -191,12 +253,16 @@ export default function CartContextProvider({ children }) {
           UpdateItemQuantity,
           clearCart,
           handlePayment,
-        
           getMyOrders,
           allOrdersData,
           setallOrdersData,
           loading,
           error,
+          addToWishlist,
+          getWishlist,
+          removeItemWishlist,
+          wishlist,
+          numberOfWishlistItems,
         }}
       >
         {children}

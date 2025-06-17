@@ -20,6 +20,9 @@ import ProductDetails from "./components/ProductDetails/ProductDetails";
 import FilterProducts from "./components/FilterProducts/FilterProducts";
 import CategoriesDetails from "./components/CategoriesDetails/CategoriesDetails";
 import Wishlist from "./components/Wishlist/Wishlist";
+import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
+import VerifyCode from "./components/VerifyCode/VerifyCode";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import "flowbite";
 
@@ -49,7 +52,6 @@ const router = createBrowserRouter([
         path: "/products",
         element: (
           <ProtectedRoutes>
-            
             {/* This route is protected, meaning it requires authentication to access. */}
             {/* If the user is not authenticated, they will be redirected to the login page. */}
             {/* The Products component will be rendered if the user is authenticated. */}
@@ -66,7 +68,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-      path: "/categories/:id/",
+        path: "/categories/:id/",
 
         element: (
           <ProtectedRoutes>
@@ -74,7 +76,7 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
-         {
+      {
         path: "/wishlist",
         element: (
           <ProtectedRoutes>
@@ -100,7 +102,7 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
-        {
+      {
         path: "/filterproducts/:id/:name",
         element: (
           <ProtectedRoutes>
@@ -120,6 +122,18 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/forget-password",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "/verify-code",
+        element: <VerifyCode />,
+      },
+       {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
       {
         path: "/register",
@@ -157,8 +171,7 @@ function App() {
     /* It allows components to access authentication-related data and functions. */
     // if i have multiple context providers, i wrap the routerprvider with them like a nested structure:
     <AuthContextProvider>
-      <QueryClientProvider client={queryClient}> 
-       
+      <QueryClientProvider client={queryClient}>
         {/* to be able to use useQuery ,following the documntation from tankstack*/}
         <CartContextProvider>
           {/* we put the cart context inside the auth contect because we want the cart to have access to the auth token */}

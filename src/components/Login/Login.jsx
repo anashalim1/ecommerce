@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
+import { Link } from "react-router-dom";
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -64,7 +64,10 @@ export default function Login() {
               <span className="">{error}</span>
             </Alert>
           )}
-          <form onSubmit={formik.handleSubmit} className="bg-gray-800 py-20 px-6 rounded-lg shadow-md">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="bg-gray-800 py-20 px-6 rounded-lg shadow-md"
+          >
             <div className="relative mb-6">
               <input
                 type="email"
@@ -114,12 +117,21 @@ export default function Login() {
               </span>
             )}
 
-            <Button
-              disabled={!(formik.isValid && formik.dirty) || isLoading}
-              type="submit"
-            >
-              {isLoading ? <i className="fa fa-spinner fa-spin"></i> : "Login"}
-            </Button>
+            <div className="flex justify-between ">
+              <Button
+                disabled={!(formik.isValid && formik.dirty) || isLoading}
+                type="submit"
+              >
+                {isLoading ? (
+                  <i className="fa fa-spinner fa-spin"></i>
+                ) : (
+                  "Login"
+                )}
+              </Button>
+              <Link className=" text-white" to={"/forget-password"}>
+                Forgot Password ?
+              </Link>
+            </div>
           </form>
         </div>
       </div>

@@ -18,6 +18,7 @@ export default function CartContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [allOrdersData, setallOrdersData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false)
   useEffect(() => {
     if (authToken !== null) {
       // to check that the user is logged in and has a token
@@ -187,7 +188,7 @@ export default function CartContextProvider({ children }) {
       );
       console.log("Wishlist fetched:", data);
       if (data.status === "success") {
-        setWishlist(data);
+        setWishlist(data.data);
         setNumberOfWishlistItems(data.data.length);
         console.log("number of wishlist items", data.data.length);
         return data;
@@ -200,6 +201,7 @@ export default function CartContextProvider({ children }) {
   }
   
   async function addToWishlist(productId) {
+    
     try {
       setLoading(true);
       const { data } = await axios.post(
@@ -209,7 +211,8 @@ export default function CartContextProvider({ children }) {
       );
       console.log("Product added to wishlist:", data);
       if (data.status === "success") {
-         setWishlist(getWishlist());
+         await getWishlist();
+         
         return data;
       }
     } catch (error) {
@@ -231,7 +234,8 @@ export default function CartContextProvider({ children }) {
       );
       console.log("Product removed from wishlist:", data);
       if (data.status === "success") {
-        setWishlist(getWishlist());
+        await getWishlist();
+        
         return data;
       }
     } catch (error) {
@@ -239,6 +243,12 @@ export default function CartContextProvider({ children }) {
       return error;
     }
   }
+
+
+  function isInWishlist(productId) {
+  return wishlist.some((item) => item._id === productId);
+}
+
   return (
     <>
       <CartContext.Provider
@@ -263,6 +273,7 @@ export default function CartContextProvider({ children }) {
           removeItemWishlist,
           wishlist,
           numberOfWishlistItems,
+          isInWishlist,
         }}
       >
         {children}

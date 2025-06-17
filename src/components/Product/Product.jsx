@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom"; // Link is used to create links to other pages in the application
 import { CartContext } from "../../context/CartContext";
 import { toast } from "react-toastify";
 export default function Product({ product }) {
-  const { addToCart, addToWishlist } = useContext(CartContext);
+  const { addToCart, addToWishlist, removeItemWishlist, isInWishlist } =
+    useContext(CartContext);
 
   async function addingToCart(productId) {
     const res = await addToCart(productId);
@@ -34,6 +35,30 @@ export default function Product({ product }) {
       });
     }
   }
+
+  async function removingFromWishlist(productId) {
+    const res = await removeItemWishlist(productId);
+    if (res.status == "success") {
+      toast.success("Product removed from wishlist successfully!", {
+        theme: "dark",
+        position: "bottom-right",
+      });
+    } else {
+      toast.error("Error removing product from wishlist!", {
+        theme: "dark",
+        position: "bottom-right",
+      });
+    }
+  }
+
+  const handleWishlistToggle = async () => {
+    if (isInWishlist(product._id)) {
+      await removingFromWishlist(product._id);
+    } else {
+      await addingToWishlist(product._id);
+    }
+  };
+
   return (
     <>
       <div key={product._id} className="w-full md:w-1/2 lg:w-1/5 p-4 group">
@@ -78,12 +103,14 @@ export default function Product({ product }) {
             Add to Cart
           </button>
           <button
-            onClick={() => addingToWishlist(product._id)}
+            onClick={handleWishlistToggle}
             type="button"
             className="opacity-0 group-hover:opacity-100       px-5 py-2.5 me-2 mb-2"
           >
             <svg
-              className="w-9 h-9 text-red-700 text-2xl"
+              className={`w-8 h-8 text-2xl ${
+                isInWishlist(product._id) ? "text-red-700" : "text-gray-700"
+              }`}
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"

@@ -5,13 +5,13 @@ import Loader from "../Loader/Loader.jsx";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 export default function Wishlist() {
-  const { ownerId ,authToken} = useContext(AuthContext);
+  const { ownerId, authToken } = useContext(AuthContext);
   const { getWishlist, wishlist, removeItemWishlist, loading, error } =
     useContext(CartContext);
 
   async function removingFromWishlist(productId) {
     const res = await removeItemWishlist(productId);
-    // await getWishlist(); 
+    // await getWishlist();
     if (res.status === "success") {
       toast.success("Product removed from wishlist successfully!", {
         theme: "dark",
@@ -55,7 +55,7 @@ export default function Wishlist() {
   return (
     <>
       <section>
-        {Array.isArray(wishlist?.data) && wishlist.data.length > 0 ? (
+        {Array.isArray(wishlist) && wishlist.length > 0 ? (
           <div className="shadow-md p-8 bg-gray-500 rounded-lg mx-7 my-9">
             <table className="w-full text-m text-center text-black rounded-lg">
               <thead className="uppercase bg-green-100 text-black">
@@ -75,7 +75,7 @@ export default function Wishlist() {
                 </tr>
               </thead>
               <tbody>
-                {wishlist.data.map((product) => (
+                {wishlist.map((product) => (
                   <tr key={product._id} className="bg-white">
                     <td className="p-4">
                       <img

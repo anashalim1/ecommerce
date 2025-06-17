@@ -1,5 +1,4 @@
 import React from "react";
-import { FloatingLabel } from "flowbite-react";
 import { Button, Alert } from "flowbite-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";

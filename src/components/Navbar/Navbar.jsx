@@ -65,12 +65,20 @@ export default function CustomNavbar() {
             <NavbarLink as={NavLink} to="/allorders" className="!text-white">
               My orders
             </NavbarLink>
-            <NavbarLink as={NavLink} to="/wishlist" className="!text-white">
-              <i class="fa-solid fa-heart text-2xl pr-1.5"></i>
+            <NavbarLink
+              as={NavLink}
+              to="/wishlist"
+              className="!text-white text-l"
+            >
+              <i
+                className={`fa-solid fa-heart ${
+                  numberOfWishlistItems > 0 ? "text-red-600" : "text-gray-600"
+                } text-xl pr-1.5`}
+              ></i>
               {numberOfWishlistItems}
             </NavbarLink>
-            <NavbarLink as={NavLink} to="/cart" className="!text-white">
-              <i className="fa-solid fa-cart-shopping text-2xl pr-1.5"></i>
+            <NavbarLink as={NavLink} to="/cart" className="!text-white text-l">
+              <i className="fa-solid fa-cart-shopping text-xl pr-1.5"> </i>
               {numberOfCartItems}
             </NavbarLink>
             <span className="cursor-pointer !text-white" onClick={handleLogout}>

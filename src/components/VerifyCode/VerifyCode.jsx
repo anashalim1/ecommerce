@@ -21,11 +21,12 @@ export default function VerifyCode() {
     try {
       const { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode",
-        values,  {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
+        values,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log(data);
       if (data.status === "Success") {
@@ -35,6 +36,7 @@ export default function VerifyCode() {
       setError(null);
     } catch (error) {
       setError(error.response.data.message);
+      console.error("Error code:", error.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -71,9 +73,23 @@ export default function VerifyCode() {
             </label>
           </div>
           <div>
+            {/* Show validation error */}
+            {formik.touched.resetCode && formik.errors.resetCode && (
+              <span className="text-red-500 block mb-4 font-bold ">
+                {formik.errors.resetCode}
+              </span>
+            )}
+
+            {/* Show backend error */}
+            {error && (
+              <span className="text-red-500 block mb-4 font-bold">
+                {error}
+              </span>
+            )}
+          </div>
+          <div>
             <button
               disabled={!(formik.isValid && formik.dirty)}
-            
               type="submit"
               className={`px-4 py-2 font-bold rounded-lg text-white ${
                 formik.isValid && formik.dirty

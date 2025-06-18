@@ -9,12 +9,40 @@ export default function CategorySlider() {
   const [loading, setLoading] = useState(false);
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
-    slidesToShow: 7,
+    slidesToShow: 5,
     slidesToScroll: 1,
+    initialSlide: 0,
     autoplay: true,
     autoplaySpeed: 2000,
+
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   async function getCategories() {
@@ -42,24 +70,22 @@ export default function CategorySlider() {
   return (
     <>
       <section className="py-20">
-        <div className="container mx-auto">
-          <div className="slider-container  ">
-            
-              <Slider {...settings}>
-                {categories.map((category) => (
-                  <Link to={`/categories/${category._id}`}>
-                  <div key={category._id}>
+        <div className="container mx-auto ">
+          <div className="slider-container mx-auto  ">
+            <Slider {...settings}>
+              {categories.map((category) => (
+                <Link to={`/categories/${category._id}`}>
+                  <div key={category._id} className="text-center font-bold ">
                     <img
                       src={category.image}
                       alt={category.name}
                       className="mx-auto h-40 object-contain "
                     />
-                    <h2>{category.name}</h2>
+                    <h2 className="my-4">{category.name}</h2>
                   </div>
-                  </Link>
-                ))}
-              </Slider>
-            
+                </Link>
+              ))}
+            </Slider>
           </div>
         </div>
       </section>

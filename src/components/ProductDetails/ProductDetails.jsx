@@ -19,7 +19,8 @@ export default function ProductDetails() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  const { addToCart ,addToWishlist } = useContext(CartContext);
+  const { addToCart, addToWishlist, removeItemWishlist, isInWishlist } =
+    useContext(CartContext);
 
   async function addingToCart(productId) {
     const res = await addToCart(productId);
@@ -51,7 +52,7 @@ export default function ProductDetails() {
       setLoading(false);
     }
   }
- async function addingToWishlist(productId) {
+  async function addingToWishlist(productId) {
     const res = await addToWishlist(productId);
     if (res.status == "success") {
       toast.success("Product added to wishlist successfully!", {
@@ -65,17 +66,39 @@ export default function ProductDetails() {
       });
     }
   }
+  async function removingFromWishlist(productId) {
+    const res = await removeItemWishlist(productId);
+    if (res.status == "success") {
+      toast.success("Product removed from wishlist successfully!", {
+        theme: "dark",
+        position: "bottom-right",
+      });
+    } else {
+      toast.error("Error removing product from wishlist!", {
+        theme: "dark",
+        position: "bottom-right",
+      });
+    }
+  }
+
+  const handleWishlistToggle = async () => {
+    if (isInWishlist(recentProduct._id)) {
+      await removingFromWishlist(recentProduct._id);
+    } else {
+      await addingToWishlist(recentProduct._id);
+    }
+  };
+
   useEffect(() => {
     getRecentProduct();
   }, [id]); // <-- re-run if id changes
 
-
-  useEffect(()=>{
-    if(recentProduct.title){
-    document.title = recentProduct.title; // mange the tab name 
+  useEffect(() => {
+    if (recentProduct.title) {
+      document.title = recentProduct.title; // mange the tab name
     }
     window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
-  },[recentProduct]) 
+  }, [recentProduct]);
   return (
     <>
       <section className="py-20 w-2/3 mx-auto">
@@ -117,20 +140,36 @@ export default function ProductDetails() {
                   </div>
                 </div>
 
-                <button
+                <div className="flex">
+                  <button
                   onClick={() => addingToCart(recentProduct._id)}
                   type="button"
                   className="focus:outline-none w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                 >
                   Add to Cart
                 </button>
-                  <button
-                  onClick={() => addingToWishlist(recentProduct._id)}
+                <button
+                  onClick={handleWishlistToggle}
                   type="button"
-                  className="focus:outline-none w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                  className=" px-5 py-2.5 me-2 mb-2"
                 >
-                  Add to wishlist
+                  <svg
+                    className={`w-8 h-8 text-2xl ${
+                      isInWishlist(recentProduct._id)
+                        ? "text-red-700"
+                        : "text-gray-700"
+                    }`}
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                  </svg>
                 </button>
+                </div>
               </div>
             </div>
           )}

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom"; // Link is used to create links to other pages in the application
 import { CartContext } from "../../context/CartContext";
 import { toast } from "react-toastify";
+
 export default function Product({ product }) {
   const { addToCart, addToWishlist, removeItemWishlist, isInWishlist } =
     useContext(CartContext);
@@ -61,7 +62,7 @@ export default function Product({ product }) {
 
   return (
     <>
-      <div key={product._id} className="w-full md:w-1/2 lg:w-1/5 p-4 group">
+      <div key={product._id} className=" mx-auto w-3/4  md:w-1/2 lg:w-1/5 p-4 group">
         <Link to={`/product-details/${product._id}/${product.category.name}`}>
           {/* Link is used to navigate to the product details page when the product card is clicked */}
 

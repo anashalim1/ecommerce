@@ -8,6 +8,11 @@ export default function Wishlist() {
   const { ownerId, authToken } = useContext(AuthContext);
   const { getWishlist, wishlist, removeItemWishlist, loading, error } =
     useContext(CartContext);
+  useEffect(() => {
+    if (authToken) {
+      getWishlist();
+    }
+  }, [authToken]);
 
   async function removingFromWishlist(productId) {
     const res = await removeItemWishlist(productId);
@@ -25,11 +30,6 @@ export default function Wishlist() {
     }
   }
 
-  useEffect(() => {
-    if (authToken) {
-      getWishlist();
-    }
-  }, [authToken]);
 
   useEffect(() => {
     document.title = "Wishlist";

@@ -14,7 +14,7 @@ export default function MainSlider() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows:false,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 2000,
     
   };
@@ -26,21 +26,36 @@ export default function MainSlider() {
 
   return (
     <>
-      <section className="py-20">
-        <div className="container mx-auto">
-          <div className="row flex">
-            <div className="w-2/3">
-              <Slider {...settings}>
-                {images.map((image) => (
-                  <div>
-                    <img src={image.src} alt={image.alt} />
+      <section className="py-20 ">
+        <div className="container mx-auto ">
+          <div className="flex items-stretch">
+            <div className="w-2/3  ">
+              <Slider {...settings} >
+                {images.map((image, idx) => (
+                  <div key={idx} className="h-full">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover rounded-xl"
+                    />
                   </div>
                 ))}
               </Slider>
             </div>
-            <div className="w-1/3">
-              <img src={img1} alt="grocery " className="h-1/2" />
-              <img src={img2} alt="bread" className="h-1/2" />
+            {/* Side images take 1/3 of the width */}
+            <div className="w-1/3 flex flex-col justify-between">
+              <img
+                src={img1}
+                alt="grocery"
+                className="h-1/2 object-cover w-full rounded-xl"
+                style={{ height: "50%" }}
+              />
+              <img
+                src={img2}
+                alt="bread"
+                className="h-1/2 object-cover w-full rounded-xl"
+                style={{ height: "50%" }}
+              />
             </div>
           </div>
         </div>

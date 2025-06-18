@@ -66,10 +66,11 @@ export default function CustomNavbar() {
               My orders
             </NavbarLink>
             <NavbarLink as={NavLink} to="/wishlist" className="!text-white">
-              Wishlist {numberOfWishlistItems}
+              <i class="fa-solid fa-heart text-2xl pr-1.5"></i>
+              {numberOfWishlistItems}
             </NavbarLink>
             <NavbarLink as={NavLink} to="/cart" className="!text-white">
-              <i className="fa-solid fa-cart-shopping text-xl pr-1.5"></i>{" "}
+              <i className="fa-solid fa-cart-shopping text-2xl pr-1.5"></i>
               {numberOfCartItems}
             </NavbarLink>
             <span className="cursor-pointer !text-white" onClick={handleLogout}>

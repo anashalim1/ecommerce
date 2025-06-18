@@ -11,18 +11,23 @@ export default function CartContextProvider({ children }) {
   const API_URL = "https://ecommerce.routemisr.com/api/v1/cart";
   const { authToken, ownerId } = useContext(AuthContext);
   const [numberOfCartItems, setnumberOfCartItems] = useState(0);
-  const [numberOfWishlistItems, setNumberOfWishlistItems] = useState(0)
+  const [numberOfWishlistItems, setNumberOfWishlistItems] = useState(0);
   const [cartId, setcartId] = useState(null);
   // const [ownerId, setOwnerId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [allOrdersData, setallOrdersData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false)
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   useEffect(() => {
     if (authToken !== null) {
       // to check that the user is logged in and has a token
-      getCartItems();
+      getCartItems();// to keep the number of cart items updated on the navbar 
+    }
+  }, [authToken]);
+  useEffect(() => {
+    if (authToken) {
+      getWishlist(); // to keep the number of wishlist items updated on the navbar 
     }
   }, [authToken]);
   //
@@ -179,7 +184,7 @@ export default function CartContextProvider({ children }) {
       setLoading(false);
     }
   }
- async function getWishlist() {
+  async function getWishlist() {
     try {
       setLoading(true);
       const { data } = await axios.get(
@@ -199,9 +204,8 @@ export default function CartContextProvider({ children }) {
       setLoading(false);
     }
   }
-  
+
   async function addToWishlist(productId) {
-    
     try {
       setLoading(true);
       const { data } = await axios.post(
@@ -211,8 +215,9 @@ export default function CartContextProvider({ children }) {
       );
       console.log("Product added to wishlist:", data);
       if (data.status === "success") {
-         await getWishlist();
-         
+        await getWishlist();
+        setNumberOfWishlistItems(data.data.length);
+
         return data;
       }
     } catch (error) {
@@ -221,8 +226,6 @@ export default function CartContextProvider({ children }) {
       setLoading(false);
     }
   }
-
- 
 
   async function removeItemWishlist(productId) {
     try {
@@ -235,7 +238,7 @@ export default function CartContextProvider({ children }) {
       console.log("Product removed from wishlist:", data);
       if (data.status === "success") {
         await getWishlist();
-        
+
         return data;
       }
     } catch (error) {
@@ -244,10 +247,9 @@ export default function CartContextProvider({ children }) {
     }
   }
 
-
   function isInWishlist(productId) {
-  return wishlist.some((item) => item._id === productId);
-}
+    return wishlist.some((item) => item._id === productId);
+  }
 
   return (
     <>

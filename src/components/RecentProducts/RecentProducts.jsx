@@ -3,10 +3,12 @@ import React, { use, useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 import Product from "../Product/Product";
 import useFetch from "../../hooks/useFetch";
+
 import { useQuery } from "@tanstack/react-query";
 export default function RecentProducts() {
   const [visableCount, setVisableCount] = useState(10);
   const [recentProducts, setRecentProducts] = useState([]);
+  const [totalNumberOfProducts, setTotalNumberOfProducts] = useState(0);
   //METHOD 1 TO FETCH DATA USING useQuery
   const { data, isError, isLoading } = useQuery({
     queryKey: "recentProducts", // unique key for the query
@@ -20,14 +22,20 @@ export default function RecentProducts() {
 
   useEffect(() => {
     if (data) {
+      setTotalNumberOfProducts(data.data.data.length);
       setRecentProducts(data.data.data.slice(0, visableCount)); // set the initial visible products
       // set the fetched data to the state
     }
   }, [data, visableCount]);
 
   function loadMoreProducts() {
-    setVisableCount((prev) => prev + 10); // increase the visible count by 20
+    setVisableCount((prev) => prev + 10);
+    // increase the visible count by 10
   }
+  useEffect(() => {
+    console.log(visableCount);
+    console.log(totalNumberOfProducts);
+  }, [visableCount]);
   //METHOD 2 to fetch data using custom hook
   // const { data, error, loading } = useFetch(
   //     "https://ecommerce.routemisr.com/api/v1/products"
@@ -83,8 +91,15 @@ export default function RecentProducts() {
               {recentProducts.length && (
                 <div className="text-center mt-6">
                   <button
+                    disabled={visableCount >= totalNumberOfProducts}
                     onClick={loadMoreProducts}
-                    className="w-full  bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                    className={`w-full text-white px-4 py-2 rounded transition 
+                     ${
+                       visableCount >= totalNumberOfProducts
+                         ? "bg-gray-400 cursor-not-allowed"
+                         : "bg-green-600 hover:bg-green-700"
+                     }
+                                              `}
                   >
                     See More products
                   </button>
